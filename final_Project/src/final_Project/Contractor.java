@@ -20,9 +20,5 @@ public class Contractor {
 	}
 
 	public boolean isActive() {
-		if (this.activeLicense == true)
-			return true;
-		else
-			return false;
+		return this.activeLicense == true;
 	}
-}
