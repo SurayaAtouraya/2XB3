@@ -2,11 +2,11 @@ package final_Project;
 
 public class Contractor {
 
-	private final String businessName, licenseNumber, address, city, state, zip, number;
+	private final String businessName, licenseNumber, address, city, state, zip, specialty, contractorName, number;
 	private boolean activeLicense;
 
 	public Contractor(String businessName, String licenseNumber, String address, String city, String state, String zip,
-			String number, boolean activeLicense) {
+			String number, String specialty, String contractorName, boolean activeLicense) {
 
 		this.businessName = businessName;
 		this.licenseNumber = licenseNumber;
@@ -15,6 +15,8 @@ public class Contractor {
 		this.state = state;
 		this.zip = zip;
 		this.number = number;
+		this.specialty = specialty; //What type of work they do.
+		this.contractorName = contractorName;
 		this.activeLicense = activeLicense;
 
 	}
@@ -25,5 +27,9 @@ public class Contractor {
 	
 	public String getLicenseNumber() {
 		return this.licenseNumber;
+	}
+	
+	public String getContractorName() {
+		return this.contractorName;
 	}
 }

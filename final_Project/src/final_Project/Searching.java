@@ -7,7 +7,7 @@ public class Searching {
 
 	//Assuming array is sorted to provide logarithmic search time
 	public List<String> searchLicenseNumber(Contractor[] Contractors, String licenseNumber) { 
-		if (licenseNumber.length() != 12) {
+		if (licenseNumber.length() > 12) {
 			System.out.println("Invalid string entry!");
 			return null;
 		}

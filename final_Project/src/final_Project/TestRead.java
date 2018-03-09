@@ -24,19 +24,17 @@ public class TestRead {
 					bool = true;
 				else
 					bool = false;
-				
-				for (int i = 0; i < items.size(); i++) {
+				String name = items.get(20) + items.get(19);
 					Contractor guy = new Contractor(items.get(0), items.get(1), items.get(4), items.get(6),
-							items.get(7), items.get(8), items.get(9), bool);
+							items.get(7), items.get(8), items.get(9), items.get(15),name, bool);
 					contractors.add(guy);
-				}
-
+			}
+			for (int i = 0; i < contractors.size(); i++) {
+				System.out.println(contractors.get(i).getContractorName());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println(contractors.get(3).isActive());
-		System.out.println(contractors.get(1).getLicenseNumber());
 	}
 
 }
