@@ -22,4 +22,8 @@ public class Contractor {
 	public boolean isActive() {
 		return this.activeLicense == true;
 	}
+	
+	public String getLicenseNumber() {
+		return this.licenseNumber;
+	}
 }

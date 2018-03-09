@@ -36,6 +36,7 @@ public class TestRead {
 			e.printStackTrace();
 		}
 		System.out.println(contractors.get(3).isActive());
+		System.out.println(contractors.get(1).getLicenseNumber());
 	}
 
 }
