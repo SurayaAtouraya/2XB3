@@ -22,3 +22,4 @@ public class Contractor {
 	public boolean isActive() {
 		return this.activeLicense == true;
 	}
+}
