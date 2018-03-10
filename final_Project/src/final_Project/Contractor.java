@@ -42,4 +42,5 @@ public class Contractor {
 			else return (this.city.compareTo(that.city));
 		else return (this.state.compareTo(that.state));
 	}
+	
 }
