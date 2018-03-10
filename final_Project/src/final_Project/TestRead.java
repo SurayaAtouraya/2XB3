@@ -12,7 +12,7 @@ public class TestRead {
 	public static void main(String[] args) {
 
 		List<Contractor> contractors = new ArrayList<>();
-		boolean bool;
+		int bool;
 		File file = new File("testfile");
 		try {
 			Scanner sc = new Scanner(file);
@@ -21,9 +21,9 @@ public class TestRead {
 				String str = sc.nextLine();
 				List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
 				if (items.get(22).equals("ACTIVE"))
-					bool = true;
+					bool = 1;
 				else
-					bool = false;
+					bool = 0;
 				String name = items.get(20) + items.get(19);
 					Contractor guy = new Contractor(items.get(0), items.get(1), items.get(4), items.get(6),
 							items.get(7), items.get(8), items.get(9), items.get(15),name, bool);

@@ -3,10 +3,10 @@ package final_Project;
 public class Contractor {
 
 	private final String businessName, licenseNumber, address, city, state, zip, specialty, contractorName, number;
-	private boolean activeLicense;
+	private final int activeLicense;
 
 	public Contractor(String businessName, String licenseNumber, String address, String city, String state, String zip,
-			String number, String specialty, String contractorName, boolean activeLicense) {
+			String number, String specialty, String contractorName, int activeLicense) {
 
 		this.businessName = businessName;
 		this.licenseNumber = licenseNumber;
@@ -22,7 +22,8 @@ public class Contractor {
 	}
 
 	public boolean isActive() {
-		return this.activeLicense == true;
+		if (this.activeLicense == 1) return true;
+		else return false;
 	}
 	
 	public String getLicenseNumber() {
@@ -31,5 +32,14 @@ public class Contractor {
 	
 	public String getContractorName() {
 		return this.contractorName;
+	}
+	
+	//Used for sorting contractors.
+	public int compareTo(Contractor that) {
+		if (this.state.compareTo(that.state) == 0)
+			if (this.city.compareTo(that.city) == 0)
+				return (this.specialty.compareTo(that.specialty));
+			else return (this.city.compareTo(that.city));
+		else return (this.state.compareTo(that.state));
 	}
 }
