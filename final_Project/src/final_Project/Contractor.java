@@ -23,7 +23,7 @@ public class Contractor {
 
 	}
 
-	public Contractor(String city, String state, String speciality) {
+	public Contractor(String city, String state, String specialty) {
 		this.businessName = "";
 		this.licenseNumber = "";
 		this.address = "";
@@ -31,7 +31,7 @@ public class Contractor {
 		this.state = state;
 		this.zip = "";
 		this.number = "";
-		this.specialty = speciality; //What type of work they do.
+		this.specialty = specialty; //What type of work they do.
 		this.contractorName = "";
 		this.activeLicense = 1;
 	}
@@ -47,6 +47,17 @@ public class Contractor {
 
 	public String getContractorName() {
 		return this.contractorName;
+	}
+
+	public String getCity() {
+		return this.city;
+	}
+
+	public String getState() {
+		return this.state;
+	}
+	public String getSpecialty() {
+		return this.specialty;
 	}
 
 	//Used for sorting contractors.
