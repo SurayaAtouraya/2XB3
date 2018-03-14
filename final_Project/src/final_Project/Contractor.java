@@ -1,6 +1,6 @@
 package final_Project;
 
-import java.io.IOException;
+import java.util.Map;
 
 public class Contractor {
 
@@ -77,8 +77,8 @@ public class Contractor {
 		else return (this.state.compareTo(that.state));
 	}
 
-	public double avgReview() throws NumberFormatException, IOException {
-		return Double.parseDouble(Reviews.avgOfContractor(this.getLicenseNumber()));
+	public double avgReview(Map map){
+		return Double.parseDouble(Reviews.avgOfContractor(this.getLicenseNumber(), map));
 	}
 
 
