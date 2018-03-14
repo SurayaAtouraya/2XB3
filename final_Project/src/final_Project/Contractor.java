@@ -78,7 +78,9 @@ public class Contractor {
 	}
 
 	public double avgReview(Map map){
-		return Double.parseDouble(Reviews.avgOfContractor(this.getLicenseNumber(), map));
+		Double r = Double.parseDouble(Reviews.avgOfContractor(this.getLicenseNumber(), map));
+		if (r == null) return 0.0;
+		return r;
 	}
 
 
