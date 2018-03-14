@@ -1,10 +1,13 @@
 package final_Project;
 
 import java.io.File;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -28,6 +31,7 @@ public class Reviews {
 			List<String> reviewsList = Arrays.asList(reviews.split(","));
 			map.put(line.substring(0, 12),reviewsList);
 		}
+		sc.close();
 		return map;
 	}
 	
@@ -41,9 +45,23 @@ public class Reviews {
 		return null;
 	}
 	
+	//Writes Map to file. (Used on program shutdown)
+	public static void writeMapToFile(Map <String, List<String>> map, String fileName) throws FileNotFoundException, UnsupportedEncodingException {
+		PrintWriter file = new PrintWriter(fileName, "UTF-8");
+		Iterator it = map.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        String vals = pair.getValue().toString();
+	        vals = vals.substring(1, vals.length()-1);
+	        vals = vals.replaceAll("\\s+","");
+	        file.println(pair.getKey() + "," + vals);
+	        it.remove();
+	    }
+	    file.close();
+	}
+	
 	public static void main(String[] args) throws IOException {
 		Map<String, List<String>> map = initMapFromFile("Reviews.txt");
-		String avg = avgOfContractor("ABCDEFGHIJKL", map);
-		System.out.println(avg);
+		writeMapToFile(map,"Reviews.txt");
 	}
 }
