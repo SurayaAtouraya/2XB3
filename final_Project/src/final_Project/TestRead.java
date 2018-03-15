@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class TestRead {
 
-	public static void main(String[] args) {
-
+	public static List<Contractor> readSample() {
+int test = 0;
 		List<Contractor> contractors = new ArrayList<>();
 		int bool;
 		File file = new File("testfile");
@@ -20,6 +20,7 @@ public class TestRead {
 			while (sc.hasNextLine()) {
 				String str = sc.nextLine();
 				List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
+				System.out.println(test++);
 				if (items.get(22).equals("ACTIVE"))
 					bool = 1;
 				else
@@ -32,9 +33,14 @@ public class TestRead {
 			for (int i = 0; i < contractors.size(); i++) {
 				System.out.println(contractors.get(i).getContractorName());
 			}
+			return contractors;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		return contractors;
 	}
 
+	public static void main(String[] args) {
+		readSample();
+	}
 }

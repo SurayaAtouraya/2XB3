@@ -45,6 +45,10 @@ public class Contractor {
 		return this.licenseNumber;
 	}
 
+	public String getAddress() {
+		return this.address;
+	}
+	
 	public String getContractorName() {
 		return this.contractorName;
 	}
@@ -77,9 +81,9 @@ public class Contractor {
 		else return (this.state.compareTo(that.state));
 	}
 
-	public double avgReview(Map map){
-		Double r = Double.parseDouble(Reviews.avgOfContractor(this.getLicenseNumber(), map));
-		if (r == null) return 0.0;
+	public String avgReview(Map map){
+		String r = (Reviews.avgOfContractor(this.getLicenseNumber(), map));
+		if (r == null) return "N/A";
 		return r;
 	}
 
