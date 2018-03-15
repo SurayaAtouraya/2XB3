@@ -104,7 +104,7 @@ public class Reviews {
 	
 	public static void main(String[] args) throws IOException {
 		Map<String, List<String>> map = initMapFromFile("Reviews.txt");
-		addReview(map, "123456789ABC", "4");
+		addReview(map, "123456789ABC", "5");
 		writeMapToFile(map, "Reviews.txt");
 	}
 }
