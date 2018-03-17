@@ -138,7 +138,9 @@ public class SortMe {
 	//less function for use by ReviewSort 
 	private static boolean lessReview(Contractor a, Contractor b, Map map) {
 		if (a.getSpecialty().compareTo(b.getSpecialty()) != 0) return false;
-		if (a.avgReview(map) > b.avgReview(map)) return true;
+		if (a.avgReview(map).equals("N/A")) {return true;}
+		if (b.avgReview(map).equals("N/A")) {return false;}
+		if (Double.parseDouble(a.avgReview(map)) > Double.parseDouble(b.avgReview(map))) return true;
 		return false;
 	}
 	
@@ -156,12 +158,13 @@ public class SortMe {
 
 	public static void main(String[] args) throws IOException {
 
-		Contractor[] c = TestRead.ReadContractors();
-		sort(c);
-		Contractor s = new Contractor("MOUNT VERNON", "WA", "HANDY");
-		Contractor[] l = search(c, s, "Reviews");
+		java.util.List<Contractor> c = TestRead.readSample();
+		Contractor[] arr = c.toArray(new Contractor[c.size()]);
+		sort(arr);
+		Contractor s = new Contractor("SEATTLE", "WA", "LANDSCAPING");
+		Contractor[] l = search(arr, s, "Reviews");
 		for(int i = 0; i < l.length; i++) {
-			System.out.print(l[i].getSpecialty()+ ", "+l[i].getLicenseNumber()+" ");
+			System.out.print(l[i].getState() + " " + l[i].getCity() + " " + l[i].getSpecialty() + "\n");
 		}
 
 	}
