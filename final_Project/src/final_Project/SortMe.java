@@ -113,7 +113,8 @@ public class SortMe {
 			ReviewSort(output, map);
 			return output;
 		}
-		return null;
+		Contractor[] none = new Contractor[1];
+		return none;
 	}
 	//Search method for contractors in the dataset, configured to always return
 	//the index of the first instance of a search hit in sorted array of elements and -1 otherwise 
@@ -158,8 +159,7 @@ public class SortMe {
 
 	public static void main(String[] args) throws IOException {
 
-		java.util.List<Contractor> c = TestRead.readSample();
-		Contractor[] arr = c.toArray(new Contractor[c.size()]);
+		Contractor[] arr = TestRead.readSample();
 		sort(arr);
 		Contractor s = new Contractor("SEATTLE", "WA", "LANDSCAPING");
 		Contractor[] l = search(arr, s, "Reviews");

@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class TestRead {
 
-	public static List<Contractor> readSample() {
+	public static Contractor[] readSample() {
 		
 		List<Contractor> contractors = new ArrayList<>();
 		int bool;
@@ -37,32 +37,17 @@ public class TestRead {
 				}
 				}
 			}
-			return contractors;
+			Contractor[] cons = new Contractor[contractors.size()];
+			for (int i = 0; i < contractors.size(); i++) {
+				cons[i] = contractors.get(i);
+			}
+			return cons;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return contractors;
+		return null;
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException {
-		List<Contractor> contractors = readSample();
-		String name = contractors.get(0).getState();
-		String[] states = InterfaceDatabase.readStates();
-		for (int i = 0; i < states.length; i++) {
-			List<String> cities = new ArrayList<>();
-			for (int j = 0; j < contractors.size(); j++) {
-				if (contractors.get(j).getState().equals(states[i])) {
-					if (!cities.contains(contractors.get(j).getCity())) {
-						cities.add(contractors.get(j).getCity());
-					}
-				}
-			}
-			String state = states[i];
-			PrintWriter temp = new PrintWriter("stateData/" + state, "UTF-8");
-			for (int k = 0; k < cities.size(); k++) {
-				temp.println(cities.get(k));
-			}
-			temp.close();
-		}
 	}
 }

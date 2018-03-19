@@ -46,4 +46,23 @@ public class InterfaceDatabase {
 		}
 		return cities2;
 	}
+	
+	protected static String[] readSpecialities() {
+		List<String> specialities = new ArrayList<>();
+		File file = new File("stateData/specialities");
+		try {
+			Scanner sc = new Scanner(file);
+			while (sc.hasNextLine()) {
+				specialities.add(sc.nextLine());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		Collections.sort(specialities);
+		String[] specialities2 = new String[specialities.size()];
+		for (int i = 0; i < specialities.size(); i++) {
+			specialities2[i] = specialities.get(i);
+		}
+		return specialities2;
+	}
 }

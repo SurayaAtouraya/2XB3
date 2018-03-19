@@ -3,6 +3,7 @@ package final_Project;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -11,8 +12,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,8 +31,7 @@ public class Interface {
 	private JPanel pane = new JPanel(); 						//Main menu pane.
 	private DefaultTableModel model = new DefaultTableModel();	//Main menu table. 
 	private JFrame newFrame = new JFrame(); 					//Pop up frame for finding ideal contractor.
-	private JPanel newFramePane = new JPanel();					//Pop up pane.
-
+	private JPanel newFramePane = new JPanel();
 	//Launch the application.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -99,9 +101,9 @@ public class Interface {
 	private class LoadListener implements ActionListener{
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-	        List<Contractor> fromSample = TestRead.readSample();
-	        for (int i = 0; i < fromSample.size(); i++) {
-	        	Contractor c = fromSample.get(i);
+	        Contractor[] fromSample = TestRead.readSample();
+	        for (int i = 0; i < fromSample.length; i++) {
+	        	Contractor c = fromSample[i];
 	        	model.addRow(new Object[] {c.getContractorName(),c.getLicenseNumber(),c.getState(),
 	        			c.getCity(),c.getAddress(),c.getSpecialty(),c.avgReview(map)});
 	        }
@@ -119,32 +121,67 @@ public class Interface {
 	    	states.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	JComboBox citiesPicked = new JComboBox(InterfaceDatabase.readCities(states.getSelectedItem().toString()));
-	            	newFramePane.remove(newFramePane.getComponentCount()-2);
-	            	newFramePane.add(citiesPicked, newFramePane.getComponentCount()-1);
+	            	newFramePane.remove(newFramePane.getComponentCount()-5);
+	            	newFramePane.add(citiesPicked, newFramePane.getComponentCount()-4);
 	            	newFrame.add(newFramePane);
 	            	newFrame.setVisible(true);
 	            }          
 	         });
+	    	
 	    	JComboBox cities = new JComboBox(InterfaceDatabase.readCities("AK"));
+	    	JComboBox speciality = new JComboBox(InterfaceDatabase.readSpecialities());
 	    	
 	    	JLabel stateMsg = new JLabel("Please select your state:");
 	    	JLabel cityMsg = new JLabel("Please select your city:");
+	    	JLabel specialityMsg = new JLabel("Please select your work:");
+	    	
+	    	stateMsg.setAlignmentX(250);
+	    	cityMsg.setAlignmentX(250);
+	    	specialityMsg.setAlignmentX(250);
+	    	
+	    	JButton cancel = new JButton("Cancel");
+	        cancel.addActionListener(new NewFrameCloseListener());
+	        
+	    	JButton find = new JButton("Search");
+	    	find.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) { //results returns as null?
+	            	cancel.doClick();
+	            	Contractor[] allCons = TestRead.readSample();
+	            	SortMe.sort(allCons);
+	            	Contractor ideal = new Contractor(cities.getSelectedItem().toString(), states.getSelectedItem().toString(), speciality.getSelectedItem().toString());
+	            	try {
+	            		Contractor[] results = SortMe.search(allCons, ideal, "Reviews");
+						for (int i = 0; i < results.length; i++) {
+		    	        	Contractor c = results[i];
+		    	        	System.out.println(c.getContractorName());
+		    	        	model.addRow(new Object[] {c.getContractorName(),c.getLicenseNumber(),c.getState(),
+		    	        			c.getCity(),c.getAddress(),c.getSpecialty(),c.avgReview(map)});
+		    	        }
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	            }          
+	         });
+	    	
 	    	
 	    	newFrame.setUndecorated(true);
 	    	newFrame.setSize(500,300);
 	    	newFrame.setLocationRelativeTo(null);
 	    	newFrame.setAlwaysOnTop(true);
-	    	
-	    	JButton cancel = new JButton("Cancel");
-	        cancel.addActionListener(new NewFrameCloseListener());
 	        
+	    	newFramePane.setLayout(new BoxLayout(newFramePane, BoxLayout.Y_AXIS));
 	        newFramePane.add(stateMsg);
-	        newFramePane.add(states);
+	        newFramePane.add(states);			
 	        newFramePane.add(cityMsg);
-	        newFramePane.add(cities);
+	        newFramePane.add(cities);				
+	        newFramePane.add(specialityMsg);
+	        newFramePane.add(speciality);	
+	        newFramePane.add(find);
 	        newFramePane.add(cancel);
 	        newFramePane.setBackground(Color.WHITE);
+	        newFramePane.setBackground(Color.WHITE);
 	        newFrame.add(newFramePane);
+	        newFrame.pack();
 	        newFrame.setVisible(true);
 	        
 	    }
@@ -156,6 +193,7 @@ public class Interface {
 	    public void actionPerformed(ActionEvent e) {
 	    	frame.setEnabled(true);
 	    	newFrame.setVisible(false);
+	    	newFramePane.removeAll();
 	    	newFrame.dispose();
 	    }
 	}
