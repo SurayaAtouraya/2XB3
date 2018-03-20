@@ -113,7 +113,8 @@ public class SortMe {
 			ReviewSort(output, map);
 			return output;
 		}
-		Contractor[] none = new Contractor[1];
+		Contractor g = new Contractor(null, null, null);
+		Contractor[] none = { g };
 		return none;
 	}
 	//Search method for contractors in the dataset, configured to always return
@@ -166,6 +167,7 @@ public class SortMe {
 		for(int i = 0; i < l.length; i++) {
 			System.out.print(l[i].getState() + " " + l[i].getCity() + " " + l[i].getSpecialty() + "\n");
 		}
+		System.out.println(l[0].getLicenseNumber());
 
 	}
 
