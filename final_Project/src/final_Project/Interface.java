@@ -109,6 +109,7 @@ public class Interface {
 	        }
 	    }
 	}
+	JComboBox cities = new JComboBox(InterfaceDatabase.readCities("AK"));
 	//Find Button which loads the new frame for finding a contractor.
 	private class FindListener implements ActionListener{
 	    @Override
@@ -120,15 +121,14 @@ public class Interface {
 	    	
 	    	states.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	JComboBox citiesPicked = new JComboBox(InterfaceDatabase.readCities(states.getSelectedItem().toString()));
 	            	newFramePane.remove(newFramePane.getComponentCount()-5);
-	            	newFramePane.add(citiesPicked, newFramePane.getComponentCount()-4);
+	            	cities = new JComboBox(InterfaceDatabase.readCities(states.getSelectedItem().toString()));
+	            	newFramePane.add(cities, newFramePane.getComponentCount()-4);
 	            	newFrame.add(newFramePane);
 	            	newFrame.setVisible(true);
 	            }          
 	         });
 	    	
-	    	JComboBox cities = new JComboBox(InterfaceDatabase.readCities("AK"));
 	    	JComboBox speciality = new JComboBox(InterfaceDatabase.readSpecialities());
 	    	
 	    	JLabel stateMsg = new JLabel("Please select your state:");
@@ -148,7 +148,11 @@ public class Interface {
 	            	cancel.doClick();
 	            	Contractor[] allCons = TestRead.readSample();
 	            	SortMe.sort(allCons);
-	            	Contractor ideal = new Contractor(cities.getSelectedItem().toString(), states.getSelectedItem().toString(), speciality.getSelectedItem().toString());
+	            	Contractor ideal = new Contractor(cities.getSelectedItem().toString().trim(), states.getSelectedItem().toString().trim(), speciality.getSelectedItem().toString().trim());
+	            	System.out.println(cities.getSelectedItem().toString().trim());
+	            	System.out.println(states.getSelectedItem().toString().trim());
+	            	System.out.println(speciality.getSelectedItem().toString().trim());
+
 	            	try {
 	            		Contractor[] results = SortMe.search(allCons, ideal, "Reviews");
 						for (int i = 0; i < results.length; i++) {
