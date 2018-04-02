@@ -1,6 +1,7 @@
-package final_Project;
+package GUI;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -21,7 +22,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+
+import ADT.Contractor;
+import Algorithms.Search;
+import Algorithms.Sort;
+import Read.DataReader;
+import Read.DataReaderForInterface;
+import Read.Reviews;
 
 public class Interface {
 
@@ -32,8 +42,10 @@ public class Interface {
 	private DefaultTableModel model = new DefaultTableModel();	//Main menu table. 
 	private JFrame newFrame = new JFrame(); 					//Pop up frame for finding ideal contractor.
 	private JPanel newFramePane = new JPanel();
+	
 	//Launch the application.
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -56,6 +68,7 @@ public class Interface {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setUndecorated(true);
 		
+		JButton distance = new JButton("Distance");
         JButton loadData = new JButton("Load All");
         JButton find = new JButton("Find Contractor");
         JButton end = new JButton("Exit Program");
@@ -63,6 +76,8 @@ public class Interface {
         loadData.addActionListener(new LoadListener());
         find.addActionListener(new FindListener());
         
+        distance.setEnabled(false);
+        pane.add(distance);
 		pane.add(loadData);
 		pane.add(find);
 		pane.add(end);
@@ -74,8 +89,18 @@ public class Interface {
 		model.addColumn("State");
 		model.addColumn("City");
 		model.addColumn("Address"); 
+		model.addColumn("Phone Number"); 
 		model.addColumn("Speciality"); 
-		model.addColumn("Rating");  
+		model.addColumn("Rating");
+	
+		contractorTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+		contractorTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+		contractorTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+		contractorTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+		contractorTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+		contractorTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+		contractorTable.getColumnModel().getColumn(6).setPreferredWidth(200);
+		contractorTable.getColumnModel().getColumn(7).setPreferredWidth(0);
 		
 		JScrollPane scrollPane = new JScrollPane(contractorTable);
 		scrollPane.setPreferredSize(new Dimension(1300, 650));
@@ -101,15 +126,17 @@ public class Interface {
 	private class LoadListener implements ActionListener{
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-	        Contractor[] fromSample = TestRead.readSample();
+	        Contractor[] fromSample = DataReader.readContractors();
+	        model.setRowCount(0);
 	        for (int i = 0; i < fromSample.length; i++) {
 	        	Contractor c = fromSample[i];
 	        	model.addRow(new Object[] {c.getContractorName(),c.getLicenseNumber(),c.getState(),
-	        			c.getCity(),c.getAddress(),c.getSpecialty(),c.avgReview(map)});
+	        			c.getCity(),c.getAddress(),c.getNumber(), c.getSpecialty(),c.avgReview(map)});
 	        }
 	    }
 	}
-	JComboBox cities = new JComboBox(InterfaceDatabase.readCities("AK"));
+	JComboBox cities = new JComboBox(DataReaderForInterface.readCities("AK"));
+	
 	//Find Button which loads the new frame for finding a contractor.
 	private class FindListener implements ActionListener{
 	    @Override
@@ -117,19 +144,19 @@ public class Interface {
 	    	
 	    	frame.setEnabled(false);
 	    	
-	    	JComboBox states = new JComboBox(InterfaceDatabase.readStates());
+	    	JComboBox states = new JComboBox(DataReaderForInterface.readStates());
 	    	
 	    	states.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	newFramePane.remove(newFramePane.getComponentCount()-5);
-	            	cities = new JComboBox(InterfaceDatabase.readCities(states.getSelectedItem().toString()));
+	            	cities = new JComboBox(DataReaderForInterface.readCities(states.getSelectedItem().toString()));
 	            	newFramePane.add(cities, newFramePane.getComponentCount()-4);
 	            	newFrame.add(newFramePane);
 	            	newFrame.setVisible(true);
 	            }          
 	         });
 	    	
-	    	JComboBox speciality = new JComboBox(InterfaceDatabase.readSpecialities());
+	    	JComboBox speciality = new JComboBox(DataReaderForInterface.readSpecialities());
 	    	
 	    	JLabel stateMsg = new JLabel("Please select your state:");
 	    	JLabel cityMsg = new JLabel("Please select your city:");
@@ -144,28 +171,31 @@ public class Interface {
 	        
 	    	JButton find = new JButton("Search");
 	    	find.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) { //results returns as null?
+	            public void actionPerformed(ActionEvent e) { 
 	            	cancel.doClick();
-	            	Contractor[] allCons = TestRead.readSample();
-	            	SortMe.sort(allCons);
+	            	Contractor[] allCons = DataReader.readContractors();
+	            	Sort.sort(allCons);
 	            	Contractor ideal = new Contractor(cities.getSelectedItem().toString().trim(), states.getSelectedItem().toString().trim(), speciality.getSelectedItem().toString().trim());
 	            	System.out.println(cities.getSelectedItem().toString().trim());
 	            	System.out.println(states.getSelectedItem().toString().trim());
 	            	System.out.println(speciality.getSelectedItem().toString().trim());
 
 	            	try {
-	            		Contractor[] results = SortMe.search(allCons, ideal, "Reviews");
+	            		Contractor[] results = Search.search(allCons, ideal, "Reviews");
+	            		model.setRowCount(0);
 						for (int i = 0; i < results.length; i++) {
 		    	        	Contractor c = results[i];
 		    	        	System.out.println(c.getContractorName());
 		    	        	model.addRow(new Object[] {c.getContractorName(),c.getLicenseNumber(),c.getState(),
-		    	        			c.getCity(),c.getAddress(),c.getSpecialty(),c.avgReview(map)});
+		    	        			c.getCity(),c.getAddress(),c.getNumber(), c.getSpecialty(),c.avgReview(map)});
 		    	        }
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 	            }          
 	         });
+	    	
+	    	
 	    	
 	    	
 	    	newFrame.setUndecorated(true);
@@ -179,14 +209,15 @@ public class Interface {
 	        newFramePane.add(cityMsg);
 	        newFramePane.add(cities);				
 	        newFramePane.add(specialityMsg);
-	        newFramePane.add(speciality);	
+	        newFramePane.add(speciality);
 	        newFramePane.add(find);
 	        newFramePane.add(cancel);
-	        newFramePane.setBackground(Color.WHITE);
-	        newFramePane.setBackground(Color.WHITE);
+	        newFramePane.setBackground(Color.LIGHT_GRAY);
 	        newFrame.add(newFramePane);
 	        newFrame.pack();
 	        newFrame.setVisible(true);
+	        
+	        
 	        
 	    }
 	}

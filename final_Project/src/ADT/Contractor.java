@@ -1,6 +1,9 @@
-package final_Project;
+package ADT;
 
+import java.util.List;
 import java.util.Map;
+
+import Read.Reviews;
 
 public class Contractor {
 
@@ -52,6 +55,10 @@ public class Contractor {
 	public String getContractorName() {
 		return this.contractorName;
 	}
+	
+	public String getNumber() {
+		return this.number;
+	}
 
 	public String getCity() {
 		return this.city;
@@ -81,7 +88,7 @@ public class Contractor {
 		else return (this.state.compareTo(that.state));
 	}
 
-	public String avgReview(Map map){
+	public String avgReview(Map<String, List<String>> map){
 		String r = (Reviews.avgOfContractor(this.getLicenseNumber(), map));
 		if (r == null) return "N/A";
 		return r;

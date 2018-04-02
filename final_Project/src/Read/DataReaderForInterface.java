@@ -1,4 +1,4 @@
-package final_Project;
+package Read;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 //Used to read database to use in interface.
-public class InterfaceDatabase {
+public class DataReaderForInterface {
 
-	protected static String[] readStates() {
+	public static String[] readStates() {
 		int count = 0;
 		String[] states = new String[50];
 		File file = new File("stateData/states");
@@ -28,7 +28,7 @@ public class InterfaceDatabase {
 		return states;
 	}
 	
-	protected static String[] readCities(String state) {
+	public static String[] readCities(String state) {
 		List<String> cities = new ArrayList<>();
 		File file = new File("stateData/" + state);
 		try {
@@ -47,7 +47,7 @@ public class InterfaceDatabase {
 		return cities2;
 	}
 	
-	protected static String[] readSpecialities() {
+	public static String[] readSpecialities() {
 		List<String> specialities = new ArrayList<>();
 		File file = new File("stateData/specialities");
 		try {
