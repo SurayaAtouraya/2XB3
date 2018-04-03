@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class SplashScreen {
@@ -16,8 +17,10 @@ public class SplashScreen {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 					try {
+						@SuppressWarnings("unused")
 						SplashScreen window = new SplashScreen();
-					} catch (InterruptedException e) {
+						UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+					} catch (InterruptedException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 						e.printStackTrace();
 					}
 			}
@@ -39,7 +42,7 @@ public class SplashScreen {
 		    public void run()
 		    {
 		         try {
-					Thread.sleep(5000);
+					Thread.sleep(1000);
 					MainMenu.main(null);
 					frame.dispose();
 				} catch (InterruptedException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {
