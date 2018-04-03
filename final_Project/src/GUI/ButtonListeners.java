@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -103,7 +105,7 @@ public class ButtonListeners  {
 		    	find.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent e) { 
 		            	ButtonListeners.closeFrame();
-		            	Contractor[] allCons = DataReader.readContractors();
+		            	ArrayList<Contractor> allCons = DataReader.readContractors();
 		            	Sort.sort(allCons);
 		            	Contractor ideal = new Contractor(MainMenu.cities.getSelectedItem().toString().trim(), states.getSelectedItem().toString().trim(), speciality.getSelectedItem().toString().trim());
 		            	System.out.println(MainMenu.cities.getSelectedItem().toString().trim());
@@ -111,10 +113,10 @@ public class ButtonListeners  {
 		            	System.out.println(speciality.getSelectedItem().toString().trim());
 
 		            	try {
-		            		Contractor[] results = Search.search(allCons, ideal, "Reviews");
+		            		ArrayList<Contractor> results = Search.search(allCons, ideal, "Reviews");
 		            		MainMenu.model.setRowCount(0);
-							for (int i = 0; i < results.length; i++) {
-			    	        	Contractor c = results[i];
+							for (int i = 0; i < results.size(); i++) {
+			    	        	Contractor c = results.get(i);
 			    	        	System.out.println(c.getContractorName());
 			    	        	MainMenu.model.addRow(new Object[] {c.getContractorName(),c.getLicenseNumber(),c.getState(),
 			    	        			c.getCity(),c.getAddress(),c.getNumber(), c.getSpecialty(),c.avgReview(MainMenu.map)});
