@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -41,7 +42,7 @@ public class SplashScreen {
 					Thread.sleep(5000);
 					MainMenu.main(null);
 					frame.dispose();
-				} catch (InterruptedException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				} catch (InterruptedException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {
 					e.printStackTrace();
 				}
 		         
