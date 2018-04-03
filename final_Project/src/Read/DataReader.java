@@ -1,5 +1,3 @@
-package Read;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -15,9 +13,9 @@ import ADT.Contractor;
 
 public class DataReader {
 
-	public static Contractor[] readContractors() {
+	public static ArrayList<Contractor> readContractors() {
 
-		List<Contractor> contractors = new ArrayList<>();
+		ArrayList<Contractor> contractors = new ArrayList<>();
 		int bool;
 		File file = new File("FullData.txt");
 		try {
@@ -39,11 +37,8 @@ public class DataReader {
 					}
 				}
 			}
-			Contractor[] cons = new Contractor[contractors.size()];
-			for (int i = 0; i < contractors.size(); i++) {
-				cons[i] = contractors.get(i);
-			}
-			return cons;
+			sc.close();
+			return contractors;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
