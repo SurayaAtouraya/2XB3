@@ -233,7 +233,7 @@ Contractor($Name,License,address,city,state,zip,number,specialty, contractorName
 
 \noindent avgReview(map):
 \begin{itemize}
-\item output: $out := \neg (self.getActive() = that.getActive()) \Rightarrow ((self.getActive() = True) \Rightarrow 1 | False) $ 
+\item output: $out := Reviews.avgOfContractor(self.getLicenseNumber(), map) $ 
 \end{itemize} 
 
 
