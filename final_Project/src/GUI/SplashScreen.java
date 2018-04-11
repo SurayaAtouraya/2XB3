@@ -9,10 +9,17 @@ import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+/**
+ * 
+ * @author Ninos Yomo
+ * @version 1.0
+ * 
+ */
+
 public class SplashScreen {
 
 	private JFrame frame;
-
+   
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -27,10 +34,14 @@ public class SplashScreen {
 		});
 	}
 
+	/*
+	 * @throws InterruptedException if initialization is interrupted
+	 */
+	
 	public SplashScreen() throws InterruptedException {
 		initialize();
 	}
-
+	
 	private void initialize() throws InterruptedException {
 		frame = new JFrame();
 		frame.setUndecorated(true);
