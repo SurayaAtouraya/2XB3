@@ -28,7 +28,11 @@ import Read.DataReader;
 import Read.DataReaderForInterface;
 import Read.Reviews;
 
-//Class that includes all button action listeners used by the GUI
+/**
+ * Class that includes all button action listeners used by the GUI
+ * @author Ninos Yomo
+ * @version 1.0
+ **/
 public class ButtonListeners  {
 
 	//ActionListener for the "Exit" button when the main
