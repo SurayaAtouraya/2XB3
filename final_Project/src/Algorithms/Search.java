@@ -70,16 +70,13 @@ public class Search {
 		return -1;
 	}
 	
-	public static void main(String[] args) throws IOException {
-
+	public static Contractor searchByLicense(String license) throws IOException {
 		ArrayList<Contractor> arr = DataReader.readContractors();
-		Sort.sort(arr);
-		Contractor s = new Contractor("ANCHORAGE", "AK", "GLAZING/GLASS");
-		ArrayList<Contractor> l = search(arr, s, "Reviews");
-		for(int i = 0; i < l.size(); i++) {
-			System.out.print(l.get(i).getState() + " " + l.get(i).getCity() + " " + l.get(i).getSpecialty() + " "+l.get(i).getLicenseNumber()+"\n");
+		for (int i = 0; i < arr.size(); i++) {
+			if (arr.get(i).getLicenseNumber().equals(license)) {
+				return arr.get(i);
+			}
 		}
-		System.out.println(l.get(0).getLicenseNumber());
-
+		return null;
 	}
 }

@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/home/atouraya/Desktop/School/2XB3 Final Project/2XB3/final_Project/lib/seaglasslookandfeel-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/seaglasslookandfeel-0.2.jar"/>
+	<classpathentry kind="lib" path="/home/atouraya/Desktop/School/2XB3 Final Project/2XB3/final_Project/lib/org.json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

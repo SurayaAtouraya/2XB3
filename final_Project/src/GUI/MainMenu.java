@@ -27,12 +27,11 @@ public class MainMenu {
 	
 	public JTable contractorTable = new JTable(model); 
 	static JComboBox<String> cities = new JComboBox<>(DataReaderForInterface.readCities("AK"));
-	static ButtonListeners buttonListeners = new ButtonListeners();
-	static MouseListeners mouseListeners = new MouseListeners();
+	static ButtonListeners buttonListeners = new ButtonListeners();	
 	static ButtonListeners.CloseWindow CloseWindow = buttonListeners.new CloseWindow();
 	static ButtonListeners.CloseFrame CloseFrame = buttonListeners.new CloseFrame();
 	static ButtonListeners.FindButton FindButton = buttonListeners.new FindButton();
-	static MouseListeners.MouseJTable mousePressed= mouseListeners.new MouseJTable();
+	static ButtonListeners.DistButton Distance = buttonListeners.new DistButton();
 	private static final int DO_NOTHING_ON_CLOSE = 0;
 	static JFrame frame = new JFrame(); 						//Main menu frame.
 	private JPanel pane = new JPanel(); 						//Main menu pane.
@@ -70,10 +69,13 @@ public class MainMenu {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		newFrame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
+		JButton distance = new JButton("Distance to Contractor");
         JButton find = new JButton("Find Contractor");
         JButton end = new JButton("Exit Program");
+        distance.addActionListener(Distance);
         end.addActionListener(CloseFrame);
         find.addActionListener(FindButton);
+        pane.add(distance);
 		pane.add(find);
 		pane.add(end);
         

@@ -42,7 +42,7 @@ public class SplashScreen {
 		    public void run()
 		    {
 		         try {
-					Thread.sleep(1000);
+					Thread.sleep(5000);
 					MainMenu.main(null);
 					frame.dispose();
 				} catch (InterruptedException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {

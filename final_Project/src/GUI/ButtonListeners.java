@@ -1,25 +1,29 @@
 package GUI;
 
-import java.util.ArrayList;
-
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import org.json.JSONException;
 
 import ADT.Contractor;
 import Algorithms.Search;
 import Algorithms.Sort;
+import GUI.ButtonListeners.DistButton;
 import Read.DataReader;
 import Read.DataReaderForInterface;
 import Read.Reviews;
@@ -139,13 +143,70 @@ public class ButtonListeners  {
 		        MainMenu.newFramePane.add(speciality);
 		        MainMenu.newFramePane.add(find);
 		        MainMenu.newFramePane.add(cancel);
-//		        newFramePane.setBackground(Color.LIGHT_GRAY);
 		        MainMenu.newFrame.add(MainMenu.newFramePane);
 		        MainMenu.newFrame.addWindowListener(MainMenu.CloseWindow);
 		        MainMenu.newFrame.pack();
 		        MainMenu.newFrame.setVisible(true);
 		    }
 		}
+		
+		class DistButton implements ActionListener {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	ButtonListeners buttonListeners = new ButtonListeners();
+		    	MainMenu.frame.setEnabled(false);
+		    	MainMenu.newFramePane.removeAll();
+		    	MainMenu.newFrame.dispose();
+		    	MainMenu.newFrame.setSize(500,300);
+		    	MainMenu.newFrame.setLocationRelativeTo(null);
+		    	MainMenu.newFrame.setAlwaysOnTop(true);
+		    	
+		    	MainMenu.newFramePane.setLayout(new BoxLayout(MainMenu.newFramePane, BoxLayout.Y_AXIS));
+		    	JLabel msg = new JLabel("Please input address in this format: 17+Sussex+Crt+Hamilton,ON,CA");
+		    	JTextArea address = new JTextArea("Enter your address here!");
+		    	JTextArea license = new JTextArea("Enter contractor license here!");
+		    	JScrollPane jScrollPane = new JScrollPane(address);
+		    	JScrollPane jScrollPane2 =new JScrollPane(license);
+		    	JButton submit = new JButton("Submit");
+		    	jScrollPane.getViewport().setPreferredSize(new Dimension(50,5));
+		    	jScrollPane2.getViewport().setPreferredSize(new Dimension(50,5));
+		    	MainMenu.newFramePane.add(msg);
+		    	MainMenu.newFramePane.add(jScrollPane);
+		    	MainMenu.newFramePane.add(jScrollPane2);
+		    	MainMenu.newFramePane.add(submit);
+		        MainMenu.newFrame.add(MainMenu.newFramePane);
+		        MainMenu.newFrame.addWindowListener(MainMenu.CloseWindow);
+		        MainMenu.newFrame.pack();
+		        MainMenu.newFrame.setVisible(true);
+		        
+		        submit.addActionListener(new ActionListener() {
+				    @Override
+				    public void actionPerformed(ActionEvent e) {
+				    	
+				    	MainMenu.newFrame.setEnabled(false);
+				    	
+				    	try {
+				    		String from = address.getText();
+							Contractor found = Search.searchByLicense(license.getText());
+							if (found == null) {
+								JOptionPane.showMessageDialog(null, "No Contractor Found!", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+								MainMenu.newFrame.setEnabled(true);
+							}
+							if (found != null) {
+								String to = found.getAddress() + " " + found.getCity() + "," + found.getState() + "," + "US";
+								to = to.replace(" ", "+");
+								String dist = Graphing.DistanceGet.getDriveDist(from, to);
+								JOptionPane.showMessageDialog(null, "Distance to Contractor: " + dist, "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+								MainMenu.newFrame.setEnabled(true);
+							}
+						} catch (IOException | JSONException e1) {
+							e1.printStackTrace();
+						}
+				    }
+				});
+		    }
+	    }
+		
 	
 	
 	
