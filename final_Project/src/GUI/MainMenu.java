@@ -22,7 +22,10 @@ import Read.DataReaderForInterface;
 import Read.Reviews;
 
 import GUI.ButtonListeners;
-
+/**
+ * @author Ninos Yomo
+ * @version 1.0
+ **/
 public class MainMenu {
 	
 	public JTable contractorTable = new JTable(model); 
