@@ -7,9 +7,20 @@ import java.util.*;
 
 import org.json.*;
 
+/**
+ * @author Ninos Yomo, Paul Heys
+ * @version 1.0
+ **/
+
 public class DistanceGet {
 
-
+	/**
+	 * @param from String	Name/address of starting point
+	 * @param to String		Name/address of destination
+	 * @return String	Distance of trip
+	 * @throws JSONException
+	 * @throws IOException
+	 **/
 	public static String getDriveDist(String from, String to) throws JSONException, IOException{
 
 		String key = "AIzaSyCUhPPAXtj0DcyAkaPWEZTBaHCcr36Dgqc";//
