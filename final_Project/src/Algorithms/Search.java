@@ -8,17 +8,20 @@ import java.util.Map;
 import ADT.Contractor;
 import Read.DataReader;
 import Read.Reviews;
-
+/**
+ * @author Will Donaldson, Paul Heys
+ * @Version 1.0
+ **/
 public class Search {	
-	/*Author: William Donaldson
- 	*Usage: Search for contractor
- 	*Takes an arrayList of contractors (Assumed to be sorted), a contractor to be searched for, and a filename for the contractor reviews
- 	*The function binary searches the array for an exact match, saves the index of the match in the 
- 	*variable index, then binary searches for a contractor that fits the criteria and is a Generalist 
- 	*and saves the index in generalIndex. 
- 	*The number of matching elements is counted then a new array of the same size is created and the 
- 	*appropriate values are assigned to it. Finally the array of matching contractors is sorted so that 
- 	*the highest reviewed contractors are at the beginning while the generalists are still kept at the end.*/
+	/**
+	 * Search for a contractor in sorted ArrayList of contractors
+	 * @param a ArrayList<Contractor>	sorted list of contractors
+	 * @param b Contractor		Contractor to be searched for
+	 * @param filename String	filename of the file containing the reviews
+	 * @see ArrayList
+	 * @see Algorithms.Sort#ReviewSort
+	 * @return ArrayList<Contractor> 	List of search hits sorted so that the top reviewed Contractors are first
+	 **/
 	public static ArrayList<Contractor> search(ArrayList<Contractor> a, Contractor b, String filename) throws IOException {
 		Map<String,List<String>> map = Reviews.initMapFromFile(filename);
 		ArrayList<Contractor> results = new ArrayList<Contractor>();
@@ -49,8 +52,12 @@ public class Search {
 		none.add(g);
 		return none;
 	}
-	//Search method for contractors in the dataset, configured to always return
-	//the index of the first instance of a search hit in sorted array of elements and -1 otherwise 
+	/**
+	 *  Implementation of binary search to find (lowest) index containing a given contractor in a sorted ArrayList
+	 *  @param a ArrayList<Contractor> 	sorted list of contractors to be searched
+	 *  @param b Contractor		Contractor being searched for
+	 *  @return int		-1 for no search hit, otherwise index in a such that a.get(index) = b and a.get(index - 1) != b
+	 **/
 	private static int bSearch(ArrayList<Contractor> a, Contractor b) {
 
 		int lo = 0;
@@ -69,7 +76,12 @@ public class Search {
 		}
 		return -1;
 	}
-	
+	/**
+	 * Brute force implementation for finding a contractor from their license number
+	 * @throws IOException 		If given file is not found
+	 * @param license	license number to be searched for
+	 * @return Contractor	Contractor object form data set that has the license number being searched for
+	 **/
 	public static Contractor searchByLicense(String license) throws IOException {
 		ArrayList<Contractor> arr = DataReader.readContractors();
 		for (int i = 0; i < arr.size(); i++) {
